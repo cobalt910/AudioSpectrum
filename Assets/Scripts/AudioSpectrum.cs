@@ -23,10 +23,10 @@ namespace AudioSpectrum
         private float[] fragEnergy;
         private List<float[]> histEnergyBuffer;
         private float[] averageHistEnergy;
-
-        private const int chSize = 1024;
-        private const int fragSize = 64;
-        private const int histSize = 32;
+        
+        private const int chSize = 512;
+        public const int fragSize = 64;
+        private const int histSize = 43;
 
         private void Awake() => source = GetComponent<AudioSource>();
 
@@ -42,9 +42,13 @@ namespace AudioSpectrum
             averageHistEnergy = new float[fragSize];
         }
 
-        private void Update()
+        public float[] GetAudioSpectrum()
         {
-            
+            source.GetSpectrumData(samples: leftCh, channel: (int)ChannelsNumber.x, window: Window);
+            source.GetSpectrumData(samples: rightCh, channel: (int)ChannelsNumber.y, window: Window);
+            FragmentedEnergy();
+            AverageHistEnergy();
+            return averageHistEnergy;
         }
 
         public void FragmentedEnergy()
@@ -65,7 +69,7 @@ namespace AudioSpectrum
 
         public void AverageHistEnergy()
         {
-            // ограничиваем размер массива (да, костыль!)
+            // ограничиваем размер массива (да, немного костыль!)
             if (histEnergyBuffer.Count == histSize)
                 histEnergyBuffer.RemoveAt(0);
 
@@ -78,7 +82,7 @@ namespace AudioSpectrum
                 float e = 0;
                 for (int j = 0; j != histSize; j++)
                 {
-                    if (histEnergyBuffer.Count < j) break;
+                    if (histEnergyBuffer.Count == j) break;
                     e += histEnergyBuffer[j][i];
                 }
                 averageHistEnergy[i] = e / histSize;
