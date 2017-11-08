@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PeerPrefab: {fileID: 1109761365532970, guid: 431084452e064a249bde6de9475c5a68, type: 2}
-  EnergyMultiply: 5000
+  EnergyMultiply: 150
   SpawnOffset: 1.1
   PeerLerpSpeed: 10
   PeerScaleCorrection: 0.6
@@ -168,7 +168,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 157b993e679341e4ba7ac3f23ab81719, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 09d47fcf5bde53e4eb79700e317e7873, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
